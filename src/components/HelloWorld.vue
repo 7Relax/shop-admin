@@ -2,10 +2,19 @@
 
 import { ref } from 'vue'
 
-// defineProps<{ msg: string }>()
-const msg = 'vite'
+const props = defineProps({
+  msg: {
+    type: String,
+    default: ''
+  }
+})
 
 const count = ref(0)
+
+const increment = () => {
+  console.log(props.msg)
+  count.value++
+}
 
 </script>
 
@@ -15,7 +24,7 @@ const count = ref(0)
   <div class="card">
     <button
       type="button"
-      @click="count++"
+      @click="increment"
     >
       count is {{ count }}
     </button>
