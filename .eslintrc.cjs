@@ -19,6 +19,13 @@ module.exports = {
   plugins: [
     'vue'
   ],
+  // 使用 ignorePatterns 来告诉 ESLint 忽略特定的文件和目录
+  // ignorePatterns: ['vite.config.ts'],
   rules: {
+    // 添加组件命名忽略规则
+    'vue/multi-word-component-names': ['error', {
+      // 需要忽略的组件名
+      ignores: ['index']
+    }]
   }
 }

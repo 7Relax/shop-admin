@@ -1,0 +1,5 @@
+# 可以通过在项目的根目录下创建 .eslintignore 文件来告诉 ESLint 要忽略哪些文件和目录
+# .eslintignore 文件是一个纯文本文件，其中每一行都是一个 glob 模式
+
+vite.config.ts
+/src/vite-env.d.ts
