@@ -26,6 +26,13 @@ module.exports = {
     'vue/multi-word-component-names': ['error', {
       // 需要忽略的组件名
       ignores: ['index']
+    }],
+    'vue/html-self-closing': ['error', {
+      html: {
+        void: 'never',
+        normal: 'never',
+        component: 'always'
+      }
     }]
   }
 }
