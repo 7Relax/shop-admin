@@ -33,6 +33,19 @@ module.exports = {
         normal: 'never',
         component: 'always'
       }
+    }],
+    'vue/max-attributes-per-line': ['error', {
+      singleline: {
+        max: 4
+      },
+      multiline: {
+        max: 4
+      }
+    }],
+    'vue/singleline-html-element-content-newline': ['error', {
+      ignoreWhenNoAttributes: true,
+      ignoreWhenEmpty: true,
+      ignores: ['pre', 'textarea']
     }]
   }
 }

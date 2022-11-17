@@ -17,5 +17,14 @@ export default defineConfig({
     alias: {
       '@': path.join(__dirname, 'src') // src 目录的绝对路径
     }
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        // additionalData: '$injectedColor: orange;'
+        // 不要漏了最后的分号，因为scss语法需要有末尾分号
+        additionalData: '@import "@/styles/variables.scss"; @import "@/styles/common.scss";'
+      }
+    }
   }
 })
