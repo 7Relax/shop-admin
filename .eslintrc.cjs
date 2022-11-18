@@ -46,6 +46,8 @@ module.exports = {
       ignoreWhenNoAttributes: true,
       ignoreWhenEmpty: true,
       ignores: ['pre', 'textarea']
-    }]
+    }],
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/promise-function-async': 'off'
   }
 }
