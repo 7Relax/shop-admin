@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosRequestConfig } from 'axios'
 
 // 创建请求实例
 const instance = axios.create({
@@ -21,4 +21,11 @@ instance.interceptors.response.use(function (response) {
   return await Promise.reject(error)
 })
 
-export default instance
+// export default instance
+
+export default <T = any>(config: AxiosRequestConfig) => {
+  return instance(config).then(res => {
+    // 返回的类型是由传入的泛型T决定
+    return res.data.data as T
+  })
+}

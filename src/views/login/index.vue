@@ -4,11 +4,15 @@
 
 <script lang="ts" setup>
 import { getLoginInfo } from '@/api/common'
-import { onMounted } from 'vue'
+import { ILoginInfo } from '@/api/types/common'
+import { onMounted, ref } from 'vue'
+
+// eslint-disable-next-line space-infix-ops
+const list = ref<ILoginInfo['slide']>([])
 
 onMounted(() => {
-  getLoginInfo().then(res => {
-    console.log('res = ', res)
+  getLoginInfo().then(data => {
+    list.value = data.slide
   })
 })
 </script>
