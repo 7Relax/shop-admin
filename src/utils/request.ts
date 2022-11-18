@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig } from 'axios'
 
 // 创建请求实例
 const instance = axios.create({
-  baseURL: 'https://shop.fed.lagou.com/api/admin'
+  baseURL: import.meta.env.VITE_API_BASEURL
 })
 
 // 请求拦截器
