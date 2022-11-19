@@ -2,7 +2,8 @@ import axios, { AxiosRequestConfig } from 'axios'
 
 // 创建请求实例
 const instance = axios.create({
-  baseURL: import.meta.env.VITE_API_BASEURL
+  // baseURL: import.meta.env.VITE_SERVICE_URL
+  baseURL: import.meta.env.VITE_BASE_API // 代理前缀
 })
 
 // 请求拦截器
