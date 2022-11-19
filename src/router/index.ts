@@ -1,12 +1,19 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+import AppLayout from '@/layout/AppLayout.vue'
 
 // 路由规则
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    name: 'home',
-    // 用异步组件的方式引入
-    component: async () => await import('../views/home/index.vue')
+    component: AppLayout,
+    children: [
+      {
+        path: '', // 默认子路由
+        name: 'home',
+        // 用异步组件的方式引入
+        component: async () => await import('../views/home/index.vue')
+      }
+    ]
   },
   {
     path: '/login',
