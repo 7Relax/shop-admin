@@ -42,11 +42,7 @@ module.exports = {
         max: 4
       }
     }],
-    'vue/singleline-html-element-content-newline': ['error', {
-      ignoreWhenNoAttributes: true,
-      ignoreWhenEmpty: true,
-      ignores: ['pre', 'textarea']
-    }],
+    'vue/singleline-html-element-content-newline': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/promise-function-async': 'off',
     'dot-notation': 'off'

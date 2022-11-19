@@ -1,20 +1,17 @@
 <template>
-  <div v-for="(item, index) of arrData" :key="index" class="item">
-    {{ item.name }}
-  </div>
+  <h1>首页</h1>
+  <el-button type="primary">测试按钮</el-button>
+  <el-date-picker
+    v-model="value1"
+    type="date"
+    placeholder="选择日期"
+  />
 </template>
 
 <script lang="ts" setup>
-const arrData = [
-  { name: '英语' },
-  { name: '数学' },
-  { name: '体育' }
-]
+import { ref } from 'vue'
+const value1 = ref('')
 </script>
 
 <style lang="scss" scoped>
-.item {
-  color: $injectedColor;
-  font-size: $fontSize;
-}
 </style>
