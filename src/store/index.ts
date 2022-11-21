@@ -1,26 +1,22 @@
 import { InjectionKey } from 'vue'
 import { createStore, Store, useStore as baseUseStore } from 'vuex'
 
-// 为 store state 声明类型
-export interface State {
-  count: number
-  foo: String
+const state = {
+  isCollapse: false
 }
+
+// 通过typeof来推断出类型并导出类型给 $store 用
+export type State = typeof state
 
 // 定义 injection key
 export const key: InjectionKey<Store<State>> = Symbol('store')
 
 // 创建一个新的 store 实例
 export const store = createStore<State>({
-  state () {
-    return {
-      count: 0,
-      foo: ''
-    }
-  },
+  state,
   mutations: {
-    increment (state) {
-      state.count++
+    setIsCollapse (state) {
+      state.isCollapse = !state.isCollapse
     }
   }
 })

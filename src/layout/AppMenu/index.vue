@@ -1,10 +1,10 @@
 <template>
   <el-menu
-    active-text-color="#ffd04b"
-    background-color="#545c64"
-    class="el-menu-vertical-demo"
+    active-text-color="#2d8cf0"
+    background-color="#304156"
     default-active="2"
-    text-color="#fff"
+    text-color="#bcc0c5"
+    :collapse="$store.state.isCollapse"
     router
   >
     <el-menu-item index="/">
@@ -77,9 +77,12 @@
 </template>
 
 <script lang="ts" setup>
-import { Document, Menu as IconMenu, Location, Setting } from '@element-plus/icons-vue'
+import { Menu as IconMenu } from '@element-plus/icons-vue'
 </script>
 
 <style lang="scss" scoped>
 .el-menu { border-right: none; }
+.el-menu:not(.el-menu--collapse) {
+  width: 200px;
+}
 </style>

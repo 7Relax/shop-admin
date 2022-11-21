@@ -25,7 +25,7 @@ module.exports = {
     // 添加组件命名忽略规则
     'vue/multi-word-component-names': ['error', {
       // 需要忽略的组件名
-      ignores: ['index']
+      ignores: ['index', 'Notification']
     }],
     'vue/html-self-closing': ['error', {
       html: {

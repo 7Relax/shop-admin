@@ -15,7 +15,10 @@ const routes: RouteRecordRaw[] = [
         path: '', // 默认子路由
         name: 'home',
         // 用异步组件的方式引入
-        component: async () => await import('../views/home/index.vue')
+        component: async () => await import('../views/home/index.vue'),
+        meta: {
+          title: '首页'
+        }
       },
       productRoutes,
       orderRoutes,
