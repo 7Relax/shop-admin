@@ -4,15 +4,20 @@
 
 import request from '@/utils/request'
 // import { ILoginInfo, ILoginResponse } from './types/common'
-import { ILoginInfo } from './types/common'
-import { userInfo } from './testData/data'
+import { userInfo, loginInfo } from './testData/data'
 
 // 登录页面图片数据
 export const getLoginInfo = () => {
-  return request<ILoginInfo>({
-    method: 'GET',
-    url: '/login/info'
+  return new Promise((resolve) => {
+    // 模拟请求
+    setTimeout(() => {
+      resolve(loginInfo)
+    }, 200)
   })
+  // return request<ILoginInfo>({
+  //   method: 'GET',
+  //   url: '/login/info'
+  // })
 }
 
 // 获取验证码

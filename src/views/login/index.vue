@@ -77,7 +77,8 @@ const formRef = ref < IElForm | null > (null)
 
 onMounted(() => {
   getLoginInfo().then(data => {
-    list.value = data.slide
+    list.value = []
+    // list.value = data.slide
   })
 })
 
