@@ -3,13 +3,7 @@
  */
 
 import request from '@/utils/request'
-import { ILoginInfo } from './types/common'
-
-// interface ResponseData<T = any> {
-//   status: number
-//   msg: string
-//   data: T
-// }
+import { ILoginInfo, ILoginResponse } from './types/common'
 
 // 登录页面图片数据
 export const getLoginInfo = () => {
@@ -17,35 +11,29 @@ export const getLoginInfo = () => {
     method: 'GET',
     url: '/login/info'
   })
+}
 
-  // return request<ResponseData<{
-  //   logo_square: string
-  //   logo_rectangle: string
-  //   login_logo: string
-  //   slide: string[]
-  // }>>({
-  //   method: 'GET',
-  //   url: '/login/info'
-  // }).then(res => {
-  //   return res.data
-  // })
+// 获取验证码
+export const getCaptcha = () => {
+  return request<Blob>({
+    method: 'GET',
+    url: '/captcha_pro',
+    params: {
+      stamp: Date.now()
+    },
+    responseType: 'blob' // 请求获取图片数据
+  })
+}
 
-  // return request<{
-  //   status: number
-  //   msg: string
-  //   data: {
-  //     logo_square: string
-  //     logo_rectangle: string
-  //     login_logo: string
-  //     slide: string[]
-  //   }
-  // }>({
-  //   method: 'GET',
-  //   url: '/login/info'
-  // })
-
-  // return request.get<{
-  //   status: number
-  //   msg: string
-  // }>('/login/info')
+// 登录
+export const login = (data: {
+  account: string
+  pwd: string
+  imgcode: string
+}) => {
+  return request<ILoginResponse>({
+    method: 'POST',
+    url: '/login',
+    data
+  })
 }

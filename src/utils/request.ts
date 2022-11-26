@@ -27,6 +27,7 @@ instance.interceptors.response.use(function (response) {
 export default <T = any>(config: AxiosRequestConfig) => {
   return instance(config).then(res => {
     // 返回的类型是由传入的泛型T决定
-    return res.data.data as T
+    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+    return (res.data.data || res.data) as T
   })
 }
