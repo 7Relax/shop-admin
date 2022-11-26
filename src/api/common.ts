@@ -3,7 +3,9 @@
  */
 
 import request from '@/utils/request'
-import { ILoginInfo, ILoginResponse } from './types/common'
+// import { ILoginInfo, ILoginResponse } from './types/common'
+import { ILoginInfo } from './types/common'
+import { userInfo } from './testData/data'
 
 // 登录页面图片数据
 export const getLoginInfo = () => {
@@ -31,9 +33,15 @@ export const login = (data: {
   pwd: string
   imgcode: string
 }) => {
-  return request<ILoginResponse>({
-    method: 'POST',
-    url: '/login',
-    data
+  return new Promise((resolve) => {
+    // 模拟请求
+    setTimeout(() => {
+      resolve(userInfo)
+    }, 1000)
   })
+  // return request<ILoginResponse>({
+  //   method: 'POST',
+  //   url: '/login',
+  //   data
+  // })
 }

@@ -46,6 +46,7 @@ import { onMounted, ref, reactive } from 'vue'
 import { FormRules, ElForm } from 'element-plus'
 import { useRouter } from 'vue-router'
 import { IElForm } from '@/types/element-plus'
+import { store } from '@/store'
 
 // 拿到路由
 const router = useRouter()
@@ -53,7 +54,7 @@ const router = useRouter()
 // 登录页面相关信息
 const list = ref < ILoginInfo['slide'] > ([])
 
-// 用户信息
+// 待提交的用户信息
 const user = reactive({ account: 'admin', pwd: '123456', imgcode: '' })
 
 const loading = ref(false)
@@ -95,7 +96,9 @@ const handleSubmit = async () => {
   const loginData = await login(user).finally(() => {
     loading.value = false
   })
-  console.log(loginData)
+
+  // 保存用户信息
+  store.commit('setUserInfo', loginData)
 
   // 跳转到首页
   router.replace({ name: 'home' }) // replace 到 name 为 home 的页面
