@@ -50,3 +50,12 @@ export const login = (data: {
   //   data
   // })
 }
+
+// 登出
+export const logout = () => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({})
+    }, 200)
+  })
+}
