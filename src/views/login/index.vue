@@ -53,7 +53,7 @@ const router = useRouter()
 const list = ref<ILoginInfo['slide']>([])
 
 // 用户信息
-const user = reactive({ account: '', pwd: '', imgcode: '' })
+const user = reactive({ account: 'admin', pwd: '123456', imgcode: '' })
 
 const loading = ref(false)
 
@@ -91,8 +91,12 @@ const handleSubmit = async () => {
   // 验证通过，展示 loading
   loading.value = true
 
-  // 请求提交
-  const loginData = await login(user)
+  // 请求提交 - 若返回的Promise是异常的，则后续的跳转代码就不会执行了
+  const loginData = await login(user).finally(() => {
+    loading.value = false
+  })
+
+  // 跳转到首页
   router.replace({ name: 'home' }) // replace 到 name 为 home 的页面
 }
 

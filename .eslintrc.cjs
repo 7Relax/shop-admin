@@ -45,6 +45,7 @@ module.exports = {
     'vue/singleline-html-element-content-newline': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/promise-function-async': 'off',
-    'dot-notation': 'off'
+    'dot-notation': 'off',
+    '@typescript-eslint/strict-boolean-expressions': 'off'
   }
 }
