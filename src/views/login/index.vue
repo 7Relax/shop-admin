@@ -45,19 +45,20 @@ import { ILoginInfo } from '@/api/types/common'
 import { onMounted, ref, reactive } from 'vue'
 import { FormRules, ElForm } from 'element-plus'
 import { useRouter } from 'vue-router'
+import { IElForm } from '@/types/element-plus'
 
 // 拿到路由
 const router = useRouter()
 
 // 登录页面相关信息
-const list = ref<ILoginInfo['slide']>([])
+const list = ref < ILoginInfo['slide'] > ([])
 
 // 用户信息
 const user = reactive({ account: 'admin', pwd: '123456', imgcode: '' })
 
 const loading = ref(false)
 
-// form 规则
+// form 规则 - 是传给 element form 组件的
 const rules = reactive < FormRules > ({
   account: [
     { required: true, message: '请输入用户名', trigger: 'blur' }
@@ -70,8 +71,8 @@ const rules = reactive < FormRules > ({
   ]
 })
 
-// 拿到 el-form 对象，要通过工具类型InstanceType去运算出来
-const formRef = ref<InstanceType<typeof ElForm> | null>(null)
+// 拿到 el-form 对象
+const formRef = ref < IElForm | null > (null)
 
 onMounted(() => {
   getLoginInfo().then(data => {
@@ -81,7 +82,6 @@ onMounted(() => {
 
 // 提交表单
 const handleSubmit = async () => {
-
   // 表单验证
   const valid = await formRef.value?.validate()
   if (!valid) {
@@ -95,6 +95,7 @@ const handleSubmit = async () => {
   const loginData = await login(user).finally(() => {
     loading.value = false
   })
+  console.log(loginData)
 
   // 跳转到首页
   router.replace({ name: 'home' }) // replace 到 name 为 home 的页面
