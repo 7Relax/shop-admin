@@ -4,13 +4,13 @@ import { store } from '@/store'
 import router from '@/router/'
 
 // 创建请求实例
-const instance = axios.create({
+const request = axios.create({
   // baseURL: import.meta.env.VITE_SERVICE_URL
   baseURL: import.meta.env.VITE_BASE_API // 代理前缀
 })
 
 // 请求拦截器
-instance.interceptors.request.use(function (config) {
+request.interceptors.request.use(function (config) {
   // 统一设置用户身份 token
   const token = store.state.userInfo?.token
   if (token && config && config.headers) {
@@ -26,7 +26,7 @@ instance.interceptors.request.use(function (config) {
 let isRefreshing = false
 
 // 响应拦截器
-instance.interceptors.response.use(function (response) {
+request.interceptors.response.use(function (response) {
   // 在此方法体里面的都是HTTP的状态码是非异常的情况，所以这里是处理项目自定义状态码的相关问题
   const status = response.data.status
 
@@ -73,10 +73,10 @@ instance.interceptors.response.use(function (response) {
   return Promise.reject(error)
 })
 
-// export default instance
+// export default request
 
 export default <T = any>(config: AxiosRequestConfig) => {
-  return instance(config).then(res => {
+  return request(config).then(res => {
     // 返回的类型是由传入的泛型T决定
     return (res.data.data || res.data) as T
   })
