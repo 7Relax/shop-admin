@@ -19,6 +19,7 @@
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { logout } from '@/api/common'
 import { useRouter } from 'vue-router'
+import { store } from '@/store'
 
 const router = useRouter()
 const doLogout = () => {
@@ -30,6 +31,9 @@ const doLogout = () => {
   }).then(async () => {
     // 确认发出退出请求
     await logout()
+
+    // 清除用户登录信息
+    store.commit('removeUserInfo')
 
     // 跳转到登录页
     router.replace({ name: 'login' })

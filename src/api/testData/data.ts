@@ -1,7 +1,8 @@
 export const userInfo = {
   account: 'admin',
   head_pic: '',
-  id: 16
+  id: 16,
+  token: 'eyj0seAejjfdksladscvafdtjkldsad'
 }
 
 export const loginInfo = {

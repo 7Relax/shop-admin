@@ -1,13 +1,12 @@
 import { InjectionKey } from 'vue'
 import { createStore, Store, useStore as baseUseStore } from 'vuex'
 import { IUserInfo } from '@/api/types/common'
-import { setItem, getItem } from '@/utils/storage'
+import { setItem, getItem, removeItem } from '@/utils/storage'
 import { USER_INFO } from '@/utils/constants'
 
 const state = {
   isCollapse: false,
-  userInfo: getItem<IUserInfo>(USER_INFO)
-  // userInfo: JSON.parse(window.localStorage.getItem('userInfo') || 'null') as IUserInfo | null
+  userInfo: getItem<{ token: string } & IUserInfo>(USER_INFO)
 }
 
 // 通过typeof来推断出类型并导出类型给 $store 用
@@ -26,7 +25,10 @@ export const store = createStore<State>({
     setUserInfo (state, payload) {
       state.userInfo = payload
       setItem(USER_INFO, state.userInfo)
-      // window.localStorage.setItem('userInfo', JSON.stringify(state.userInfo))
+    },
+    removeUserInfo (state) {
+      state.userInfo = null
+      removeItem(USER_INFO)
     }
   }
 })

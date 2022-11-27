@@ -58,4 +58,11 @@ export const logout = () => {
       resolve({})
     }, 200)
   })
+  // return request<ILoginResponse>({
+  //   method: 'GET',
+  //   url: '/setting/admin/logout',
+  //   headers: {
+  //     Authorization: 'Bearer 身份token' // 这个可以统一在响应拦截器里做
+  //   }
+  // })
 }

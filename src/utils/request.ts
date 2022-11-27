@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios'
 import { ElMessage } from 'element-plus'
+import { store } from '@/store'
 
 // 创建请求实例
 const instance = axios.create({
@@ -10,6 +11,11 @@ const instance = axios.create({
 // 请求拦截器
 instance.interceptors.request.use(function (config) {
   // 统一设置用户身份 token
+  const token = store.state.userInfo?.token
+  if (token && config && config.headers) {
+    // 传的token格式是与后端约定好的
+    config.headers.Authorization = `Bearer ${token}`
+  }
   return config
 }, async function (error) {
   return await Promise.reject(error)
