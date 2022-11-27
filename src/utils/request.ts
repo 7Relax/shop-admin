@@ -1,6 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { store } from '@/store'
+import router from '@/router/'
 
 // 创建请求实例
 const instance = axios.create({
@@ -21,18 +22,55 @@ instance.interceptors.request.use(function (config) {
   return await Promise.reject(error)
 })
 
+// 控制登录过期的锁
+let isRefreshing = false
+
 // 响应拦截器
 instance.interceptors.response.use(function (response) {
-  // 统一处理接口响应错误，比如 token 过期失效、服务端异常等
-  // 要看项目是用自定义状态码还是用HTTP的状态码
-  if (response.data.status && response.data.status !== 200) {
-    ElMessage.error(response.data.msg || '请求失败，请稍后重试')
-    // 手动返回一个 Promise 异常
-    return Promise.reject(response.data)
+  // 在此方法体里面的都是HTTP的状态码是非异常的情况，所以这里是处理项目自定义状态码的相关问题
+  const status = response.data.status
+
+  // 正确的情况
+  if (!status || status === 200) {
+    return response
   }
-  return response
-}, async function (error) {
-  return await Promise.reject(error)
+
+  // 错误情况之：统一处理登录过期（token过期）
+  if (status === 410000) {
+    if (isRefreshing) {
+      return Promise.reject(response)
+    }
+
+    // 上锁（防止同一时刻有多个请求）
+    isRefreshing = true
+
+    // 弹窗提示
+    ElMessageBox.confirm('您的登录已过期，您可以取消停留在此页面，或确认重新登录', '登录过期', {
+      confirmButtonText: '确认',
+      cancelButtonText: '取消'
+    }).then(() => {
+      // 清除本地过期的登录状态
+      store.commit('removeUserInfo')
+      // 跳转到登录页面
+      router.push({
+        name: 'login',
+        query: {
+          redirect: router.currentRoute.value.fullPath
+        }
+      })
+    }).finally(() => {
+      isRefreshing = false
+    })
+
+    // 抛出异常 - 在内部消化掉这个业务异常：代码则不会往下执行了
+    return Promise.reject(response)
+  }
+
+  // 其它错误情况
+  ElMessage.error(response.data.msg || '请求失败，请稍后重试')
+  return Promise.reject(response.data)
+}, function (error) {
+  return Promise.reject(error)
 })
 
 // export default instance

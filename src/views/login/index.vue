@@ -48,7 +48,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { IElForm } from '@/types/element-plus'
 import { store } from '@/store'
 
-// 拿到路由实例
+// 拿到路由实例 - 通过路由实例也可以拿到当前路由对象：router.currentRoute.value
 const router = useRouter()
 
 // 获取当前路由对象

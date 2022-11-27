@@ -47,6 +47,7 @@ module.exports = {
     '@typescript-eslint/promise-function-async': 'off',
     'dot-notation': 'off',
     '@typescript-eslint/strict-boolean-expressions': 'off',
-    'no-self-compare': 'off'
+    'no-self-compare': 'off',
+    '@typescript-eslint/no-floating-promises': 'off'
   }
 }
