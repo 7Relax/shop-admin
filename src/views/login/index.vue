@@ -44,12 +44,15 @@ import { getLoginInfo, login } from '@/api/common'
 import { ILoginInfo } from '@/api/types/common'
 import { onMounted, ref, reactive } from 'vue'
 import { FormRules, ElForm } from 'element-plus'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { IElForm } from '@/types/element-plus'
 import { store } from '@/store'
 
-// 拿到路由
+// 拿到路由实例
 const router = useRouter()
+
+// 获取当前路由对象
+const route = useRoute()
 
 // 登录页面相关信息
 const list = ref < ILoginInfo['slide'] > ([])
@@ -101,8 +104,13 @@ const handleSubmit = async () => {
   // 保存用户信息
   store.commit('setUserInfo', userInfo)
 
-  // 跳转到首页
-  router.replace({ name: 'home' }) // replace 到 name 为 home 的页面
+  // 跳转到上次的路由地址，如果没有则默认跳首页
+  let redirect = route.query.redirect || '/'
+  // 要注意这个容错处理
+  if (typeof redirect !== 'string') {
+    redirect = '/'
+  }
+  router.replace(redirect)
 }
 
 </script>
