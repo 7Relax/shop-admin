@@ -1,3 +1,4 @@
+// 列表查询参数
 export interface IListParams {
   page: number
   limit: number

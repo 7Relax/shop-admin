@@ -31,5 +31,6 @@ import AppHeader from './AppHeader/index.vue'
 }
 .el-main {
   background-color: #E9EEF3;
+  padding: 15px;
 }
 </style>
