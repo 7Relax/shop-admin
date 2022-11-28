@@ -7,7 +7,7 @@
       </el-icon>
     </span>
     <template #dropdown>
-      <el-dropdown-menu>
+      <el-dropdown-menu class="dropdown">
         <el-dropdown-item>个人中心</el-dropdown-item>
         <el-dropdown-item @click="doLogout">退出登录</el-dropdown-item>
       </el-dropdown-menu>
@@ -45,4 +45,11 @@ const doLogout = () => {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.dropdown {
+  padding: 10px 0;
+  ::v-deep {
+    li { padding: 8px 12px; }
+  }
+}
+</style>

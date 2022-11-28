@@ -7,7 +7,7 @@
       <el-header class="flex-a-center">
         <app-header />
       </el-header>
-      <el-main>
+      <el-main class="beautify_scroll">
         <router-view />
       </el-main>
     </el-container>

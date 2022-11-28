@@ -3,18 +3,26 @@
  */
 
 import request from '@/utils/request'
-import { IListParams, IAdmin, IAdminData } from './types/admin'
+// import { IListParams, IAdmin, IAdminData } from './types/admin'
+import { IListParams, IAdminData } from './types/admin'
+import { adminList } from './testData/data'
 
 // 获取管理员列表
 export const getAdmins = (params: IListParams) => {
-  return request<{
-    count: number
-    list: IAdmin[]
-  }>({
-    method: 'GET',
-    url: '/setting/admin',
-    params
+  return new Promise((resolve) => {
+    // 模拟请求
+    setTimeout(() => {
+      resolve(adminList)
+    }, 200)
   })
+  // return request<{
+  //   count: number
+  //   list: IAdmin[]
+  // }>({
+  //   method: 'GET',
+  //   url: '/setting/admin',
+  //   params
+  // })
 }
 
 // 创建管理员

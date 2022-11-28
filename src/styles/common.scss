@@ -1,4 +1,23 @@
-* {
+body {
   margin: 0;
   padding: 0;
+}
+
+// 美化滚动条
+.beautify_scroll {
+  scrollbar-width: thin;
+  &::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 0;
+  }
+  &::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+      cursor: pointer;
+      border-radius: 5px;
+      background: rgba(0, 0, 0, 0.15);
+      transition: color 0.2s ease;
+  }
 }
