@@ -55,16 +55,13 @@
         </el-table-column>
       </el-table>
 
-      <el-pagination
+      <app-pagination
         class="mt-15 flex-j-end"
-        small="false"
-        v-model:current-page="listParams.page"
-        v-model:page-size="listParams.limit"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="listCount"
-        background />
+        v-model:page="listParams.page"
+        v-model:limit="listParams.limit"
+        :list-total="listTotal"
+        :load-list="loadList" />
+
     </app-card>
   </page-container>
 </template>
@@ -75,7 +72,12 @@ import { IAdmin, IListParams } from '@/api/types/admin'
 import { getAdmins } from '@/api/admin'
 
 const list = ref<IAdmin[]>([]) // 列表数据
-const listCount = ref(0)
+
+onMounted(() => {
+  loadList()
+})
+
+const listTotal = ref(0)
 const listParams = reactive({ // 列表查询参数
   page: 1, // 当前页码
   limit: 10, // 每页大小
@@ -84,14 +86,11 @@ const listParams = reactive({ // 列表查询参数
   status: '' as IListParams['status']
 })
 
-onMounted(() => {
-  loadList()
-})
-
 const loadList = async () => {
+  console.log('loadList ...')
   const data = await getAdmins(listParams)
   list.value = data.list
-  listCount.value = data.count
+  listTotal.value = data.count
 }
 
 const handleQuery = () => {
@@ -102,21 +101,10 @@ const handleQuery = () => {
 const addAddmin = () => {
   console.log('addAddmin...')
 }
-
-const handleCurrentChange = (page: number) => {
-  listParams.page = page
-  loadList()
-}
-
-const handleSizeChange = (size: number) => {
-  listParams.limit = size
-  listParams.page = 1
-  loadList()
-}
 </script>
 
 <style lang="scss" scoped>
-::v-deep {
+deep {
   .el-table__row .el-button--text { padding-left: 0; }
   .el-pagination__classifier { margin-left: 8px; }
 }
