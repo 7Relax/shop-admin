@@ -49,9 +49,13 @@
         </el-table-column>
 
         <el-table-column label="操作">
-          <template #default>
+          <template #default="scope">
             <el-button type="text">编辑</el-button>
-            <el-button type="text">删除</el-button>
+            <el-popconfirm title="确定删除吗？" @confirm="doDelete(scope.row.id)">
+              <template #reference>
+                <el-button type="text" >删除</el-button>
+              </template>
+            </el-popconfirm>
           </template>
         </el-table-column>
       </el-table>
@@ -106,10 +110,16 @@ const handleQuery = () => {
 const addAddmin = () => {
   console.log('addAddmin...')
 }
+
+const doDelete = async (id: number) => {
+  // await deleteAdmin(id)
+  console.log('addAddmin... ', id)
+}
+
 </script>
 
 <style lang="scss" scoped>
-deep {
+:deep {
   .el-table__row .el-button--text { padding-left: 0; }
   .el-pagination__classifier { margin-left: 8px; }
 }

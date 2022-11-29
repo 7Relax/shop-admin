@@ -48,7 +48,7 @@ const doLogout = () => {
 <style lang="scss" scoped>
 .dropdown {
   padding: 10px 0;
-  deep {
+  :deep {
     li { padding: 8px 12px; }
   }
 }
