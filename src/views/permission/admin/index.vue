@@ -9,7 +9,7 @@
         @submit.prevent="handleQuery"
       >
         <el-form-item label="状态">
-          <el-select v-model="listParams.status" placeholder="请选择" clearable>
+          <el-select v-model="listParams.status" placeholder="请选择" clearable :disabled="listLoading">
             <el-option label="全部" value="" />
             <el-option label="显示" :value="1" />
             <el-option label="不显示" :value="0" />
@@ -17,23 +17,24 @@
         </el-form-item>
 
         <el-form-item label="管理员名称">
-          <el-input v-model="listParams.name" placeholder="请输入身份昵称" clearable />
+          <el-input v-model="listParams.name" placeholder="请输入身份昵称" clearable :disabled="listLoading" />
         </el-form-item>
 
         <el-form-item>
-          <el-button type="primary" native-type="submit">查询</el-button>
+          <el-button type="primary" native-type="submit" :disabled="listLoading">查询</el-button>
         </el-form-item>
       </el-form>
     </app-card>
 
     <app-card>
       <template #header>
-        <el-button type="primary" @click="addAddmin">添加管理员</el-button>
+        <el-button type="primary" @click="addAddmin" :disabled="listLoading">添加管理员</el-button>
       </template>
 
       <el-table
         :data="list"
         stripe
+        v-loading="listLoading"
         style="width: 100%"
       >
         <el-table-column prop="id" label="Id" width="80" />
@@ -57,6 +58,7 @@
 
       <app-pagination
         class="mt-15 flex-j-end"
+        :disabled="listLoading"
         v-model:page="listParams.page"
         v-model:limit="listParams.limit"
         :list-total="listTotal"
@@ -72,7 +74,7 @@ import { IAdmin, IListParams } from '@/api/types/admin'
 import { getAdmins } from '@/api/admin'
 
 const list = ref<IAdmin[]>([]) // 列表数据
-
+const listLoading = ref(false)
 onMounted(() => {
   loadList()
 })
@@ -88,7 +90,10 @@ const listParams = reactive({ // 列表查询参数
 
 const loadList = async () => {
   console.log('loadList ...')
-  const data = await getAdmins(listParams)
+  listLoading.value = true
+  const data = await getAdmins(listParams).finally(() => {
+    listLoading.value = false
+  })
   list.value = data.list
   listTotal.value = data.count
 }

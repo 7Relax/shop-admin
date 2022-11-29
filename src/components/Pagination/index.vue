@@ -12,7 +12,6 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType } from 'vue';
 // JS 的方式
 const props = defineProps({
   page: { // 页码
@@ -30,34 +29,10 @@ const props = defineProps({
   loadList: { // 刷新列表数据
     type: Function,
     default: () => {}
-  },
-  testObj: {
-    type: Object as PropType<{ a: string, b: number}>,
-    required: true
   }
 })
 
-// TS 的方式
-interface PropsType {
-  page: number
-  limit: number
-  listTotal: number
-  // loadList: (...args: any[]) => void
-  loadList: () => void
-}
-// 不需要指定默认值
-// const props = defineProps<PropsType>()
-
-// 需指定默认值
-// const props = withDefaults(defineProps<PropsType>(), {
-//   page: 1,
-//   limit: 10,
-//   listTotal: 0,
-//   loadList: () => {}
-// })
-
 // const emit = defineEmits(['update:page', 'update:limit'])
-
 interface EmitsType {
   (e: 'update:page', page: number): void
   (e: 'update:limit', list: number): void
