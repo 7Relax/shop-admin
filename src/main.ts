@@ -6,7 +6,8 @@ import elementPlus from './plugins/element-plus'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import PageContainer from '@/components/PageContainer/index.vue'
 import AppCard from '@/components/Card/index.vue'
-import AppPagination from '@/components/pagination/index.vue'
+import AppPagination from '@/components/Pagination/index.vue'
+import AppDialogForm from '@/components/DialogForm/index.vue'
 // 加载全局样式
 import './styles/index.scss'
 
@@ -20,6 +21,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 app.component('PageContainer', PageContainer)
 app.component('AppCard', AppCard)
 app.component('AppPagination', AppPagination)
+app.component('AppDialogForm', AppDialogForm)
 
 app
   .use(router)
