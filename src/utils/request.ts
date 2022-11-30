@@ -75,9 +75,18 @@ request.interceptors.response.use(function (response) {
 
 // export default request
 
-export default <T = any>(config: AxiosRequestConfig) => {
-  return request(config).then(res => {
-    // 返回的类型是由传入的泛型T决定
-    return (res.data.data || res.data) as T
+// export default <T = any>(config: AxiosRequestConfig) => {
+//   return request(config).then(res => {
+//     // 返回的类型是由传入的泛型T决定
+//     return (res.data.data || res.data) as T
+//   })
+// }
+
+// 模拟返回
+export default <T = any>(config: AxiosRequestConfig, data?: any, time = 300) => {
+  return new Promise<T>((resolve, reject) => {
+    setTimeout(() => {
+      resolve(data)
+    }, time)
   })
 }

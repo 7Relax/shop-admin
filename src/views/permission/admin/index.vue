@@ -44,7 +44,12 @@
         <el-table-column prop="last_ip" label="最后一次登录IP" />
         <el-table-column prop="status" label="状态">
           <template #default="scope">
-            <el-switch v-model="scope.row.status" />
+            <el-switch
+              v-model="scope.row.status"
+              :active-value="1"
+              :inactive-value="0"
+              :loading="scope.row.statusLoading"
+              @change="switchChange(scope.row)" />
           </template>
         </el-table-column>
 
@@ -53,7 +58,7 @@
             <el-button type="text">编辑</el-button>
             <el-popconfirm title="确定删除吗？" @confirm="doDelete(scope.row.id)">
               <template #reference>
-                <el-button type="text" >删除</el-button>
+                <el-button type="text">删除</el-button>
               </template>
             </el-popconfirm>
           </template>
@@ -75,15 +80,16 @@
 <script lang="ts" setup>
 import { ref, reactive, onMounted} from 'vue'
 import { IAdmin, IListParams } from '@/api/types/admin'
-import { getAdmins } from '@/api/admin'
+import { getAdmins, deleteAdmin, updateAdminStatus } from '@/api/admin'
+import { ElMessage } from 'element-plus';
 
 const list = ref<IAdmin[]>([]) // 列表数据
-const listLoading = ref(false)
+const listLoading = ref(false) // 列表loading状态
 onMounted(() => {
   loadList()
 })
 
-const listTotal = ref(0)
+const listTotal = ref(0) // 列表总数
 const listParams = reactive({ // 列表查询参数
   page: 1, // 当前页码
   limit: 10, // 每页大小
@@ -93,10 +99,13 @@ const listParams = reactive({ // 列表查询参数
 })
 
 const loadList = async () => {
-  console.log('loadList ...')
   listLoading.value = true
   const data = await getAdmins(listParams).finally(() => {
     listLoading.value = false
+  })
+  // 修改后端返回的数据，添加loading字段
+  data.list.forEach(x => {
+    x.statusLoading = false // 控制切换状态的loading效果
   })
   list.value = data.list
   listTotal.value = data.count
@@ -112,10 +121,21 @@ const addAddmin = () => {
 }
 
 const doDelete = async (id: number) => {
-  // await deleteAdmin(id)
-  console.log('addAddmin... ', id)
+  await deleteAdmin(id)
+  ElMessage.success('删除成功')
 }
 
+const switchChange = async (item: IAdmin) => {
+  item.statusLoading = true
+  await updateAdminStatus(item.id, item.status).then(() => {
+    ElMessage.success(`${item.status === 1 ? '启用成功' : '禁用成功'}`)
+  }).catch(() => {
+    // 异常则恢复数据
+    item.status = item.status === 0 ? 1 : 0
+  }).finally(() => {
+    item.statusLoading = false
+  })
+}
 </script>
 
 <style lang="scss" scoped>

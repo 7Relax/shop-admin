@@ -24,6 +24,7 @@ export interface IAdmin {
   is_del: number
   _add_time: string
   _last_time: string
+  statusLoading: boolean
 }
 
 // 创建 或 修改 管理员
