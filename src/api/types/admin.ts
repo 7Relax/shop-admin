@@ -32,7 +32,12 @@ export interface IAdminData {
   account: string
   conf_pwd: string
   pwd: string
-  roles: string
-  status: number
+  roles: number[]
+  status: 0 | 1
   real_name: string
+}
+
+export interface IRolesOptions {
+  label: string
+  value: number
 }

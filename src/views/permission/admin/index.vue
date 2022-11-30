@@ -85,7 +85,7 @@
 <script lang="ts" setup>
 import { ref, reactive, onMounted} from 'vue'
 import { IAdmin, IListParams } from '@/api/types/admin'
-import { getAdmins, deleteAdmin, updateAdminStatus } from '@/api/admin'
+import { getAdminList, deleteAdmin, updateAdminStatus } from '@/api/admin'
 import { ElMessage } from 'element-plus'
 import AdminForm from './AdminForm.vue'
 
@@ -108,7 +108,7 @@ const listTotal = ref(0) // 列表总数
 const listLoading = ref(false) // 列表loading状态
 const loadList = async () => {
   listLoading.value = true
-  const data = await getAdmins(listParams).finally(() => {
+  const data = await getAdminList(listParams).finally(() => {
     listLoading.value = false
   })
   // 修改后端返回的数据，添加loading字段

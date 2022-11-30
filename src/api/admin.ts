@@ -3,11 +3,11 @@
  */
 
 import request from '@/utils/request'
-import { IListParams, IAdmin, IAdminData } from './types/admin'
-import { adminList } from './testData/data'
+import { IListParams, IAdmin, IAdminData, IRolesOptions } from './types/admin'
+import { adminList, adminOptions, adminData } from './testData/data'
 
 // 获取管理员列表
-export const getAdmins = (params: IListParams) => {
+export const getAdminList = (params: IListParams) => {
   return request<{
     count: number
     list: IAdmin[]
@@ -51,4 +51,20 @@ export const updateAdminStatus = (id: number, status: number) => {
     method: 'PUT',
     url: `/setting/set_status/${id}/${status}`
   }, {}, 1200)
+}
+
+// 获取角色选项
+export const getRolesOptions = () => {
+  return request<IRolesOptions[]>({
+    method: 'GET',
+    url: '/setting/admin/create'
+  }, adminOptions, 1000)
+}
+
+// 获取管理员编辑数据
+export const getAdmin = (id: number) => {
+  return request<IAdminData>({
+    method: 'GET',
+    url: `/setting/admin/${id}/edit`
+  }, adminData, 2000)
 }

@@ -28,3 +28,20 @@ export const adminList = {
     { id: 11, real_name: 'zjl', account: 93, last_time: 1627526193, last_ip: '106.75.216.228', level: 1, status: 1 }
   ]
 }
+
+export const adminOptions = [
+  { label: '超级管理员', value: 1 },
+  { label: '运营', value: 2 },
+  { label: '账务', value: 3 },
+  { label: '课程学习', value: 4 }
+]
+
+export const adminData = {
+  id: 1,
+  real_name: '张三',
+  account: 25,
+  last_time: 1627526193,
+  last_ip: '106.75.216.228',
+  level: 1,
+  status: 1
+}
