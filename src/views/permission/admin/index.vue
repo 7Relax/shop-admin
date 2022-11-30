@@ -55,7 +55,7 @@
 
         <el-table-column label="操作">
           <template #default="scope">
-            <el-button type="text">编辑</el-button>
+            <el-button type="text" @click="editAdmin(scope.row.id)">编辑</el-button>
             <el-popconfirm title="确定删除吗？" @confirm="doDelete(scope.row.id)">
               <template #reference>
                 <el-button type="text">删除</el-button>
@@ -75,22 +75,26 @@
 
     </app-card>
   </page-container>
+
+  <!-- 这里的 v-model 或者 相关自定义事件 会作用到子组件的根节点上 -->
+  <admin-form
+    v-model="formVisible"
+    v-model:admin-id="adminId" />
 </template>
 
 <script lang="ts" setup>
 import { ref, reactive, onMounted} from 'vue'
 import { IAdmin, IListParams } from '@/api/types/admin'
 import { getAdmins, deleteAdmin, updateAdminStatus } from '@/api/admin'
-import { ElMessage } from 'element-plus';
+import { ElMessage } from 'element-plus'
+import AdminForm from './AdminForm.vue'
 
-const list = ref<IAdmin[]>([]) // 列表数据
-const listLoading = ref(false) // 列表loading状态
 onMounted(() => {
   loadList()
 })
 
-const listTotal = ref(0) // 列表总数
-const listParams = reactive({ // 列表查询参数
+// 列表查询参数
+const listParams = reactive({
   page: 1, // 当前页码
   limit: 10, // 每页大小
   name: '',
@@ -98,6 +102,10 @@ const listParams = reactive({ // 列表查询参数
   status: '' as IListParams['status']
 })
 
+// 加载列表数据
+const list = ref<IAdmin[]>([])
+const listTotal = ref(0) // 列表总数
+const listLoading = ref(false) // 列表loading状态
 const loadList = async () => {
   listLoading.value = true
   const data = await getAdmins(listParams).finally(() => {
@@ -111,20 +119,35 @@ const loadList = async () => {
   listTotal.value = data.count
 }
 
+// 查询列表
 const handleQuery = () => {
   console.log('handleQuery...')
   loadList()
 }
 
+// 添加管理员
 const addAddmin = () => {
   console.log('addAddmin...')
+  formVisible.value = true
 }
 
+// admin-form-dialog
+const formVisible = ref(false)
+
+// 编辑管理员
+const adminId = ref<number | null>(null)
+const editAdmin = (id: number) => {
+  adminId.value = id
+  formVisible.value = true
+}
+
+// 删除管理员
 const doDelete = async (id: number) => {
   await deleteAdmin(id)
   ElMessage.success('删除成功')
 }
 
+// 切换启用状态
 const switchChange = async (item: IAdmin) => {
   item.statusLoading = true
   await updateAdminStatus(item.id, item.status).then(() => {
