@@ -79,7 +79,8 @@
   <!-- 这里的 v-model 或者 相关自定义事件 会作用到子组件的根节点上 -->
   <admin-form
     v-model="formVisible"
-    v-model:admin-id="adminId" />
+    v-model:admin-id="adminId"
+    @success="doSuccess" />
 </template>
 
 <script lang="ts" setup>
@@ -139,6 +140,14 @@ const adminId = ref<number | null>(null)
 const editAdmin = (id: number) => {
   adminId.value = id
   formVisible.value = true
+}
+
+// 添加 或 编辑管理员 - 操作成功
+const doSuccess = () => {
+  // 关闭dialog
+  formVisible.value = false
+  // 刷新列表数据
+  loadList()
 }
 
 // 删除管理员

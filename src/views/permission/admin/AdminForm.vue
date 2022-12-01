@@ -1,6 +1,7 @@
 <template>
   <app-dialog-form
     :title="props.adminId === null ? '添加管理员' : '编辑管理员'"
+    :confirm="doConfirm"
     @closed="doClosed"
     @open="doOpen"
     width="75%"
@@ -49,10 +50,10 @@
 
 <script lang="ts" setup>
 import { PropType, reactive, ref } from 'vue'
-import { IRolesOptions, IAdmin } from '@/api/types/admin'
-import { FormRules } from 'element-plus'
+import { IRolesOptions, IAdminData } from '@/api/types/admin'
+import { ElMessage, FormRules } from 'element-plus'
 import { IElForm } from '@/types/element-plus'
-import { getRolesOptions, getAdmin } from '@/api/admin'
+import { getRolesOptions, getAdmin, createAdmin, updateAdmin } from '@/api/admin'
 
 const props = defineProps({
   // 编辑时的管理员Id
@@ -66,7 +67,7 @@ const props = defineProps({
 const form = ref<IElForm | null>(null)
 
 // 表单数据
-const admin = ref({
+const admin = ref<IAdminData>({
   account: '',
   pwd: '',
   conf_pwd: '',
@@ -91,6 +92,27 @@ const doClosed = () => {
   form.value?.clearValidate()
   // 清空表单数据
   form.value?.resetFields()
+}
+
+// 点击确认
+const doConfirm = async () => {
+  try {
+    const valid = await form.value?.validate()
+    if (!valid) {
+      return
+    }
+    if (props.adminId === null) {
+      // 添加
+      await createAdmin(admin.value)
+    } else {
+      // 编辑
+      await updateAdmin(props.adminId, admin.value)
+    }
+    // 通知父组件操作成功
+    emit('success')
+    ElMessage.success('提交成功')
+  } catch (error) {
+  }
 }
 
 // 加载角色
@@ -132,6 +154,7 @@ const rules = reactive<FormRules>({
 // emit
 interface EmitsType {
   (e: 'update:admin-id', value: number | null): void
+  (e: 'success'): void
 }
 const emit = defineEmits<EmitsType>()
 </script>

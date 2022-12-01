@@ -25,7 +25,7 @@ export const createAdmin = (data: IAdminData) => {
     method: 'POST',
     url: '/setting/admin',
     data
-  })
+  }, {}, 500)
 }
 
 // 修改管理员
@@ -34,7 +34,7 @@ export const updateAdmin = (id: number, data: IAdminData) => {
     method: 'PUT',
     url: `/setting/admin/${id}`,
     data
-  })
+  }, {}, 500)
 }
 
 // 删除管理员
@@ -58,7 +58,7 @@ export const getRolesOptions = () => {
   return request<IRolesOptions[]>({
     method: 'GET',
     url: '/setting/admin/create'
-  }, adminOptions, 1000)
+  }, adminOptions, 400)
 }
 
 // 获取管理员编辑数据
@@ -66,5 +66,5 @@ export const getAdmin = (id: number) => {
   return request<IAdminData>({
     method: 'GET',
     url: `/setting/admin/${id}/edit`
-  }, adminData, 2000)
+  }, adminData, 800)
 }

@@ -75,7 +75,7 @@ const rules = reactive < FormRules > ({
   ]
 })
 
-// 拿到 el-form 对象
+// 拿到 el-form 实例
 const formRef = ref < IElForm | null > (null)
 
 onMounted(() => {
