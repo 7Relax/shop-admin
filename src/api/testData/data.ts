@@ -39,9 +39,7 @@ export const adminOptions = [
 export const adminData = {
   id: 1,
   real_name: '张三',
-  account: 25,
-  last_time: 1627526193,
-  last_ip: '106.75.216.228',
-  level: 1,
+  account: 'admin',
+  roles: [1, 2],
   status: 1
 }
